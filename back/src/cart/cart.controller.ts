@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/@common/decorators/get-user.decorator';
@@ -32,15 +40,16 @@ export class CartController {
     @Body('productId') productId: number,
     @Body('quantity') quantity: number,
   ) {
-    return this.cartService.updateCartItemQuantity(user.id, productId, quantity);
+    return this.cartService.updateCartItemQuantity(
+      user.id,
+      productId,
+      quantity,
+    );
   }
 
   // 4. 장바구니에서 상품 삭제하기
   @Delete('/remove')
-  removeCartItem(
-    @GetUser() user: User,
-    @Body('productId') productId: number,
-  ) {
+  removeCartItem(@GetUser() user: User, @Body('productId') productId: number) {
     return this.cartService.removeCartItem(user.id, productId);
   }
 }
